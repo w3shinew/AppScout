@@ -1,61 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>AppScout - Permission Exposure Analyzer</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<div id="site-title">Site Title</div>
 
-<h3>🛡️ AppScout Security Analyzer</h3>
-<div id="site">Loading…</div>
-
-<!-- Quick Actions Section -->
-<div id="quick-actions">
-  <h4>Quick Actions</h4>
-  <div class="action-buttons">
-    <button id="block-all-btn" class="action-btn primary">
-      🛡️ Block All Risky Permissions
-    </button>
-    <div class="toggle-container">
-      <label class="toggle-label">
-        <span>📋 Clipboard Monitor</span>
-        <input type="checkbox" id="clipboard-toggle" checked>
-        <span class="toggle-slider"></span>
-      </label>
-    </div>
+<!-- Domain Information Section -->
+<div id="domain-info-section">
+  <h4>📊 Domain Information</h4>
+  <div id="domain-info-content">
+    <div id="domain-loading">Loading domain info...</div>
   </div>
 </div>
 
 <hr>
 
-<h4>Site Permissions</h4>
-<ul id="settings"></ul>
-
-<hr>
-
-<h4>Detected Capabilities</h4>
-<ul id="capabilities"></ul>
-
-<hr>
-
-<!-- Clipboard Threats Section -->
-<div id="clipboard-section">
-  <h4>Clipboard Threats <span id="threat-count" class="badge">0</span></h4>
-  <ul id="threat-list"></ul>
-  <button id="clear-threats-btn" class="small-btn">Clear History</button>
-</div>
-
-<hr>
-
-<h4>Security Advisories</h4>
-<ul id="advice"></ul>
-
-<hr>
-
-<h4>Exposure Score</h4>
-<div id="score"></div>
-
-<script src="popup.js"></script>
-</body>
-</html>
+<div id="quick-actions-section">Quick Actions</div>
