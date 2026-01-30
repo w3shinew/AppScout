@@ -88,6 +88,23 @@ function checkForMaliciousContent(text) {
   return threats;
 }
 
+// ================= BADGE COLOR MANAGEMENT =================
+
+function updateBadgeColor(tabId, status) {
+  if (status === 'critical') {
+    chrome.action.setBadgeBackgroundColor({ color: '#ef4444', tabId });
+    chrome.action.setBadgeText({ text: '!', tabId });
+  } else if (status === 'warning') {
+    chrome.action.setBadgeBackgroundColor({ color: '#facc15', tabId });
+    chrome.action.setBadgeText({ text: '⚠', tabId });
+  } else if (status === 'safe') {
+    chrome.action.setBadgeBackgroundColor({ color: '#22c55e', tabId });
+    chrome.action.setBadgeText({ text: '✓', tabId });
+  } else {
+    chrome.action.setBadgeText({ text: '', tabId });
+  }
+}
+
 // ================= MESSAGE HANDLERS =================
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -104,16 +121,20 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       // Add to threat history
       const threatEntry = {
         timestamp: new Date().toISOString(),
-        content: msg.content.substring(0, 200), // Store first 200 chars
+        content: msg.content.substring(0, 200),
         threats: threats,
         url: sender.url || "unknown"
       };
       
       threatHistory.unshift(threatEntry);
-      if (threatHistory.length > 50) threatHistory.pop(); // Keep last 50
+      if (threatHistory.length > 50) threatHistory.pop();
       
-      // Save to storage
       chrome.storage.local.set({ threatHistory });
+      
+      // Update badge to red for threat
+      if (sender.tab && sender.tab.id) {
+        updateBadgeColor(sender.tab.id, 'critical');
+      }
       
       // Show notification
       chrome.notifications.create({
@@ -129,7 +150,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       sendResponse({ malicious: false, threats: [] });
     }
     
-    return true; // Keep channel open for async response
+    return true;
   }
   
   // Toggle clipboard monitoring
@@ -153,14 +174,26 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     sendResponse({ success: true });
     return true;
   }
-});
-
-// Listen for clipboard monitor status requests
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  
+  // Update badge color
+  if (msg.type === "UPDATE_BADGE") {
+    if (sender.tab && sender.tab.id) {
+      updateBadgeColor(sender.tab.id, msg.status);
+    }
+    sendResponse({ success: true });
+    return true;
+  }
+  
+  // Get clipboard status
   if (msg.type === "GET_CLIPBOARD_STATUS") {
     chrome.storage.local.get(['clipboardMonitorEnabled'], (result) => {
       sendResponse({ enabled: result.clipboardMonitorEnabled ?? true });
     });
     return true;
   }
+});
+
+// Clear badge when tab is closed
+chrome.tabs.onRemoved.addListener((tabId) => {
+  chrome.action.setBadgeText({ text: '', tabId });
 });
