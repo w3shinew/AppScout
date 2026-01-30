@@ -1,44 +1,56 @@
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  width: 360px;
-  padding: 12px;
+  width: 420px;
+  max-height: 600px;
+  padding: 16px;
   background: #0f172a;
   color: #e5e7eb;
+  margin: 0;
 }
 
 h3 {
-  margin: 0 0 6px;
-  font-size: 18px;
+  margin: 0 0 8px;
+  font-size: 19px;
   color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 h4 {
-  margin: 12px 0 6px;
+  margin: 14px 0 8px;
   font-size: 14px;
   color: #94a3b8;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 #site {
   font-size: 12px;
-  margin-bottom: 8px;
-  color: #cbd5f5;
+  margin-bottom: 10px;
+  color: #cbd5e1;
+  font-weight: 500;
 }
 
 ul {
-  padding-left: 14px;
-  max-height: 140px;
+  padding-left: 16px;
+  max-height: 160px;
   overflow-y: auto;
+  margin: 8px 0;
 }
 
 li {
   font-size: 13px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  line-height: 1.6;
 }
 
 hr {
   border: none;
   border-top: 1px solid #1e293b;
-  margin: 10px 0;
+  margin: 14px 0;
 }
 
 .low {
@@ -54,9 +66,229 @@ hr {
 }
 
 #score {
-  margin-top: 8px;
+  margin-top: 10px;
   font-weight: bold;
-  padding: 6px;
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 8px;
   background: #020617;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ================= QUICK ACTIONS ================= */
+
+#quick-actions {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #334155;
+}
+
+#quick-actions h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.action-btn.primary:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.action-btn.primary:active {
+  transform: translateY(0);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ================= TOGGLE SWITCH ================= */
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+  padding: 8px 12px;
+  background: #1e293b;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  transition: all 0.2s ease;
+}
+
+.toggle-label:hover {
+  background: #334155;
+}
+
+.toggle-label span:first-child {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.toggle-label input[type="checkbox"] {
+  display: none;
+}
+
+.toggle-slider {
+  width: 44px;
+  height: 24px;
+  background: #475569;
+  border-radius: 12px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: all 0.3s ease;
+}
+
+.toggle-label input[type="checkbox"]:checked + .toggle-slider {
+  background: #22c55e;
+}
+
+.toggle-label input[type="checkbox"]:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+/* ================= MODIFY BUTTONS ================= */
+
+.modify-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  margin-left: 6px;
+}
+
+.modify-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: scale(1.05);
+}
+
+.modify-btn:active {
+  transform: scale(0.98);
+}
+
+.modify-btn.blocked {
+  background: #22c55e;
+  cursor: not-allowed;
+}
+
+.modify-btn.blocked:hover {
+  transform: none;
+}
+
+/* ================= CLIPBOARD THREATS ================= */
+
+#clipboard-section {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+}
+
+#clipboard-section h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.badge {
+  background: #ef4444;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+#threat-list {
+  margin: 8px 0;
+  max-height: 120px;
+}
+
+.small-btn {
+  padding: 6px 12px;
+  font-size: 11px;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.small-btn:hover {
+  background: #334155;
+  color: #e5e7eb;
+}
+
+/* ================= SCROLLBAR ================= */
+
+ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+ul::-webkit-scrollbar-track {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 3px;
+}
+
+ul::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
 }
